@@ -33,6 +33,7 @@ for (i, rect) in enumerate(rectsMainFace):
 
         
         for (x, y) in shape:
+            
             mainFacePoints.append([x, y])
             
 
@@ -55,10 +56,11 @@ while True:
 
         
         for (x, y) in shape:
+            cv2.circle(frame,(x,y),5,(0,0,255),-1)
             camFacePoints.append([x, y])
             
     if camFacePoints != []:
-        masked=returnFaceMask(frame,points=[camFacePoints[19],camFacePoints[26],camFacePoints[26],camFacePoints[17],camFacePoints[26],camFacePoints[13],camFacePoints[9],camFacePoints[5],camFacePoints[1]])
+        masked=returnFaceMask(frame,points=[camFacePoints[0],camFacePoints[18],camFacePoints[25],camFacePoints[16],camFacePoints[12],camFacePoints[8],camFacePoints[4]])
         #cv2.imshow("masked",masked)
 
     cv2.imshow("Cam Frame",frame)
