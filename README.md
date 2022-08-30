@@ -1,3 +1,4 @@
-# Face-Swap---OpenCv---Dlib
+# Face-Separation-Mask-OpenCv-Dlib
 
-Projeye devam edilecek.Yüz değişimleri yapılacak. Daha sonra PyQt5 ile arayüz yapılacak
+
+Face separation was done to be used in later projects
