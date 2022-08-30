@@ -21,11 +21,24 @@ rectsMainFace = detector(grayMainFace, 1)
 
 
 
-def returnFaceMask(img,points):
-    cv2.fillPoly(img=img, pts=[np.array(points)], color=(0, 255, 0))
-    #masked_image = cv2.bitwise_and(img, drawing)
-    return img
+def returnConvexHull(points):
+    return cv2.convexHull(points=points)
 
+
+def returnFaceMask(img,camFacePoints):
+    
+    points = np.array(camFacePoints, np.int32)
+
+    drawing = np.zeros((img.shape[0], img.shape[1],3),dtype=np.uint8)
+    
+    convexHull = returnConvexHull(points)
+
+    cv2.fillPoly(img=drawing, pts=[np.array(convexHull)], color=(255, 255, 255))
+    
+    masked = cv2.bitwise_and(src1=np.array(drawing), src2=np.array(img))
+
+    
+    return masked
 for (i, rect) in enumerate(rectsMainFace):
         
         shape = predictor(grayMainFace, rect)
@@ -48,6 +61,7 @@ while True:
     gray = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
     rectsCam = detector(gray, 1)
     rectsMainFace = detector(grayMainFace, 1)
+    maskedCam = np.zeros((frame.shape[0], frame.shape[1]))
     
     for (i, rect) in enumerate(rectsCam):
         
@@ -60,8 +74,8 @@ while True:
             camFacePoints.append([x, y])
             
     if camFacePoints != []:
-        masked=returnFaceMask(frame,points=[camFacePoints[0],camFacePoints[18],camFacePoints[25],camFacePoints[16],camFacePoints[12],camFacePoints[8],camFacePoints[4]])
-        #cv2.imshow("masked",masked)
+        masked=returnFaceMask(frame,camFacePoints=camFacePoints)
+    cv2.imshow("masked",masked)
 
     cv2.imshow("Cam Frame",frame)
 
